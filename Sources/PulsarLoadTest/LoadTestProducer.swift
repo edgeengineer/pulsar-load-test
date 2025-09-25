@@ -58,6 +58,7 @@ public actor LoadTestProducer {
         // Start production task
         task = Task { [weak self] in
             try await self?.runProduction()
+        }
     }
 
     public func stop() async {
