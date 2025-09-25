@@ -1,12 +1,11 @@
 # Pulsar Load Testing Tool
 
-A sophisticated load testing tool for Apache Pulsar with integrated Prometheus metrics, designed for long-running distributed tests across multiple devices.
+A sophisticated load testing tool for the Swift Pulsar Client with integrated Prometheus metrics, designed for short or long running distributed tests across multiple devices.
 
 ## Features
 
 - **Multiple Run Modes**: Consumer-only, Producer-only, or Both modes
 - **Configurable Message Rates**: Support for messages per second/minute/hour
-- **Long-Running Tests**: Designed for tests running 48+ hours
 - **Prometheus Integration**: Automatic metrics export with zero configuration
 - **Multi-Device Support**: Coordinate tests across multiple devices simultaneously
 - **Swift 6 Compliant**: Built with modern Swift concurrency and safety features
@@ -202,47 +201,6 @@ pulsar-load-test \
   --duration "48h"
 ```
 
-### Monitoring with Grafana
-
-Import the Prometheus data source and create dashboards to visualize:
-- Message throughput across all devices
-- End-to-end latency distribution
-- Error rates and patterns
-- Connection stability over time
-- Backlog growth/reduction
-
-## Long-Running Tests
-
-### Best Practices
-
-1. **Use systemd** or **launchd** for automatic restart on failure
-2. **Monitor disk space** for logs
-3. **Set up alerts** in Prometheus for error rates
-4. **Use screen/tmux** for remote sessions
-
-### Example systemd Service
-
-```ini
-[Unit]
-Description=Pulsar Load Test
-After=network.target
-
-[Service]
-Type=simple
-User=pulsar
-WorkingDirectory=/opt/pulsar-test
-ExecStart=/usr/local/bin/pulsar-load-test \
-  --mode both \
-  --rate "100/second" \
-  --duration "168h" \
-  --device-id "prod-node-1"
-Restart=on-failure
-RestartSec=10
-
-[Install]
-WantedBy=multi-user.target
-```
-
 ## Message Structure
 
 Messages contain JSON payloads with:
@@ -293,46 +251,3 @@ curl http://localhost:9090/metrics
 ```bash
 lsof -i :9090
 ```
-
-### Performance Tuning
-
-For high-throughput tests (>1000 msg/s):
-1. Increase I/O threads in configuration
-2. Use multiple topics with partitions
-3. Run multiple instances with different device IDs
-4. Monitor CPU and network usage
-
-## Development
-
-### Running Tests
-```bash
-swift test
-```
-
-### Code Structure
-- `Configuration.swift` - Configuration management
-- `MetricsSetup.swift` - Prometheus integration
-- `LoadTestProducer.swift` - Message production logic
-- `LoadTestConsumer.swift` - Message consumption logic
-- `LoadTestCoordinator.swift` - Test orchestration
-- `PulsarLoadTest.swift` - CLI entry point
-- `ErrorHandling.swift` - Error handling utilities
-
-### Contributing
-
-1. Follow Swift 6 best practices
-2. Avoid force unwrapping
-3. Use structured logging with metadata
-4. Add tests for new features
-5. Update this README for new options
-
-## License
-
-Apache License 2.0 (same as PulsarClient)
-
-## Support
-
-For issues or questions:
-- Check Apache Pulsar documentation
-- Review PulsarClient Swift documentation
-- File issues in the repository
