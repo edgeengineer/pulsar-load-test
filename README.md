@@ -1,12 +1,11 @@
 # Pulsar Load Testing Tool
 
-A sophisticated load testing tool for Apache Pulsar with integrated Prometheus metrics, designed for long-running distributed tests across multiple devices.
+A sophisticated load testing tool for the Swift Pulsar Client with integrated Prometheus metrics, designed for short or long running distributed tests across multiple devices.
 
 ## Features
 
 - **Multiple Run Modes**: Consumer-only, Producer-only, or Both modes
 - **Configurable Message Rates**: Support for messages per second/minute/hour
-- **Long-Running Tests**: Designed for tests running 48+ hours
 - **Prometheus Integration**: Automatic metrics export with zero configuration
 - **Multi-Device Support**: Coordinate tests across multiple devices simultaneously
 - **Swift 6 Compliant**: Built with modern Swift concurrency and safety features
