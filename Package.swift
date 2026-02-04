@@ -1,4 +1,4 @@
-// swift-tools-version: 6.1
+// swift-tools-version: 6.2
 
 import PackageDescription
 
@@ -20,7 +20,8 @@ let package = Package(
         .package(url: "https://github.com/apple/swift-log.git", from: "1.6.3"),
         .package(url: "https://github.com/swift-server/swift-prometheus.git", from: "2.0.0"),
         .package(url: "https://github.com/apple/swift-argument-parser.git", from: "1.5.0"),
-        .package(url: "https://github.com/apple/swift-distributed-tracing.git", from: "1.1.0")
+        .package(url: "https://github.com/apple/swift-distributed-tracing.git", from: "1.1.0"),
+        .package(url: "https://github.com/apple/swift-container-plugin", from: "1.0.0"),
     ],
     targets: [
         .executableTarget(
@@ -32,11 +33,7 @@ let package = Package(
                 .product(name: "Prometheus", package: "swift-prometheus"),
                 .product(name: "ArgumentParser", package: "swift-argument-parser"),
                 .product(name: "Tracing", package: "swift-distributed-tracing")
-            ],
-        ),
-        .testTarget(
-            name: "PulsarLoadTestTests",
-            dependencies: ["PulsarLoadTest"]
+            ]
         )
     ],
     swiftLanguageModes: [.v6]

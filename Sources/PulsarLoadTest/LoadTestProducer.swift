@@ -85,8 +85,13 @@ public actor LoadTestProducer {
             "totalMessages": "\(configuration.totalMessages)"
         ])
 
+        var nextSendTime = Date()
+
         while isRunning && Date() < endTime {
             try Task.checkCancellation()
+
+            // Calculate target time for next message (before sending)
+            nextSendTime = nextSendTime.addingTimeInterval(messageDelay)
 
             // Generate message payload
             let timestamp = Date().timeIntervalSince1970
@@ -117,8 +122,9 @@ public actor LoadTestProducer {
             }
 
             // Rate limiting
-            if messageDelay > 0 {
-                try await Task.sleep(for: .seconds(messageDelay))
+            let sleepTime = nextSendTime.timeIntervalSinceNow
+            if sleepTime > 0 {
+                try await Task.sleep(for: .seconds(sleepTime))
             }
         }
 

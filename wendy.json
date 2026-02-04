@@ -1,0 +1,35 @@
+{
+  "appId" : "engineer.wendy.pulsartesting",
+  "entitlements" : [
+    {
+      "type" : "audio"
+    },
+    {
+      "mode" : "bluez",
+      "type" : "bluetooth"
+    },
+    {
+      "mode" : "host",
+      "type" : "network"
+    },
+    {
+      "allowlist" : [
+
+      ],
+      "mode" : "all",
+      "type" : "video"
+    },
+    {
+      "name" : "app-com.example.pulsartesting",
+      "path" : "\/mnt\/app",
+      "type" : "persist"
+    },
+    {
+      "name" : "wendy-shared",
+      "path" : "\/mnt\/shared",
+      "type" : "persist"
+    }
+  ],
+  "language" : "swift",
+  "version" : "0.0.1"
+}

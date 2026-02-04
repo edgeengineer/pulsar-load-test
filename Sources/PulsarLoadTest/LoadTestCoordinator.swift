@@ -148,8 +148,8 @@ public actor LoadTestCoordinator {
                 }
             }
 
-            // Calculate remaining time
-            let elapsed = startTime?.timeIntervalSince1970 ?? 0
+            // Calculate elapsed and remaining time
+            let elapsed = startTime.map { Date().timeIntervalSince($0) } ?? 0
             let remaining = max(0, configuration.duration - elapsed)
             metadata["elapsed"] = .string(formatDuration(elapsed))
             metadata["remaining"] = .string(formatDuration(remaining))

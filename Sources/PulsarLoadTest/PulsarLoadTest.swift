@@ -12,34 +12,34 @@ struct PulsarLoadTest: AsyncParsableCommand {
         version: "1.0.0"
     )
 
-    @Option(name: .shortAndLong, help: "Run mode: consumer, producer, or both")
+    @Option(name: [.customShort("m"), .long], help: "Run mode: consumer, producer, or both")
     var mode: String = "both"
 
-    @Option(name: .shortAndLong, help: "Message rate (e.g., '10/minute', '60/second', '100/hour')")
+    @Option(name: [.customShort("r"), .long], help: "Message rate (e.g., '10/minute', '60/second', '100/hour')")
     var rate: String = "10/second"
 
-    @Option(name: .shortAndLong, help: "Test duration (e.g., '30s', '10m', '2h', '1d', '1w')")
+    @Option(name: [.customShort("d"), .long], help: "Test duration (e.g., '30s', '10m', '2h', '1d', '1w')")
     var duration: String = "1m"
 
-    @Option(name: .shortAndLong, help: "Pulsar service URL")
+    @Option(name: [.customShort("s"), .long], help: "Pulsar service URL")
     var serviceUrl: String = "pulsar://localhost:6650"
 
-    @Option(name: .shortAndLong, help: "Topic name")
+    @Option(name: [.customShort("t"), .long], help: "Topic name")
     var topic: String = "persistent://public/default/load-test"
 
-    @Option(name: .shortAndLong, help: "Subscription name (for consumer)")
+    @Option(name: .long, help: "Subscription name (for consumer)")
     var subscription: String = "load-test-subscription"
 
-    @Option(name: .shortAndLong, help: "Prometheus metrics port")
+    @Option(name: [.customShort("p"), .long], help: "Prometheus metrics port")
     var prometheusPort: Int = 9090
 
-    @Option(name: .shortAndLong, help: "Device ID (auto-generated if not provided)")
+    @Option(name: .long, help: "Device ID (auto-generated if not provided)")
     var deviceId: String?
 
-    @Option(name: .shortAndLong, help: "Message size in bytes")
+    @Option(name: .long, help: "Message size in bytes")
     var messageSize: Int = 1024
 
-    @Option(name: .shortAndLong, help: "Log level: trace, debug, info, warning, error, critical")
+    @Option(name: [.customShort("l"), .long], help: "Log level: trace, debug, info, warning, error, critical")
     var logLevel: String = "info"
 
     @Flag(name: .long, help: "Enable verbose logging")
@@ -83,9 +83,10 @@ struct PulsarLoadTest: AsyncParsableCommand {
             logger: logger
         )
 
-        // Initialize Pulsar client
+        // Initialize Pulsar client with logger for debugging
         let client = PulsarClient.builder { builder in
             builder.withServiceUrl(serviceUrl)
+            builder.withLogger(logger)
         }
 
         logger.info("Pulsar client initialized", metadata: [
